@@ -74,6 +74,21 @@ public class MainActivity extends AppCompatActivity
 
     public void minus(View view)
     {
+        if(!input.getText().toString().isEmpty())
+        {
 
+            total = total - temp;
+            temp = Integer.parseInt(String.valueOf(input.getText()));
+            if(counter > 0)
+            {
+                input.setHint(input.getHint() + "" +temp + "-");
+            }
+            else
+            {
+                input.setHint(temp + "-");
+            }
+            input.setText("");
+            counter++;
+        }
     }
 }
