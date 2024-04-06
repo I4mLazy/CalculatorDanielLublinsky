@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     int temp;
     int counter;
     int total;
+    String prevaction = "";
 
 
     @Override
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         if(!input.getText().toString().isEmpty())
         {
 
-            total = total + temp;
+            total = Total(total,prevaction,temp);
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity
             }
             input.setText("");
             counter++;
+            prevaction ="+";
         }
     }
 
@@ -76,8 +78,7 @@ public class MainActivity extends AppCompatActivity
     {
         if(!input.getText().toString().isEmpty())
         {
-
-            total = total - temp;
+            total = Total(total,prevaction,temp);
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
@@ -90,5 +91,61 @@ public class MainActivity extends AppCompatActivity
             input.setText("");
             counter++;
         }
+    }
+
+
+    public void multiply(View view)
+    {
+        if(!input.getText().toString().isEmpty())
+        {
+            total = Total(total,prevaction,temp);
+            temp = Integer.parseInt(String.valueOf(input.getText()));
+            if(counter > 0)
+            {
+                input.setHint(input.getHint() + "" +temp + "-");
+            }
+            else
+            {
+                input.setHint(temp + "-");
+            }
+            input.setText("");
+            counter++;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public int Total(int total, String prevaction, int temp)
+    {
+        if(prevaction.equals("+"))
+        {
+            return total+temp;
+        }
+        else if(prevaction.equals("-"))
+        {
+            return total-temp;
+        }
+        else if(prevaction.equals("*"))
+        {
+            return total*temp;
+        }
+        else if(prevaction.equals("/"))
+        {
+            return total/temp;
+        }
+        return temp;
     }
 }

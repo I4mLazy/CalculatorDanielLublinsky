@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="*"
+        android:onClick="multiply"
         app:layout_constraintEnd_toEndOf="@+id/plus"
         app:layout_constraintStart_toStartOf="@+id/plus"
         app:layout_constraintTop_toBottomOf="@+id/plus" />
