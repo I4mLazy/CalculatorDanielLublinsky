@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
-import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
 {
     EditText input;
@@ -25,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     int temp;
     int counter;
     int total;
+    int prevtemp;
     String prevaction = "";
 
 
@@ -56,15 +56,15 @@ public class MainActivity extends AppCompatActivity
     {
         if(!input.getText().toString().isEmpty())
         {
-
-            total = Total(total,prevaction,temp);
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
+                total = Total(total,temp,prevaction,prevtemp);
                 input.setHint(input.getHint() + "" +temp + "+");
             }
             else
             {
+                total = temp;
                 input.setHint(temp + "+");
             }
             input.setText("");
@@ -78,18 +78,20 @@ public class MainActivity extends AppCompatActivity
     {
         if(!input.getText().toString().isEmpty())
         {
-            total = Total(total,prevaction,temp);
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
+                total = Total(total,temp,prevaction,prevtemp);
                 input.setHint(input.getHint() + "" +temp + "-");
             }
             else
             {
+                total = temp;
                 input.setHint(temp + "-");
             }
             input.setText("");
             counter++;
+            prevaction ="-";
         }
     }
 
@@ -98,18 +100,82 @@ public class MainActivity extends AppCompatActivity
     {
         if(!input.getText().toString().isEmpty())
         {
-            total = Total(total,prevaction,temp);
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                input.setHint(input.getHint() + "" +temp + "-");
+                if(prevaction.equals("*") || prevaction.equals("/"))
+                {
+                    prevtemp = MDsum(prevtemp, prevaction, temp);
+                }
+                else
+                {
+                    total = Total(total,temp,prevaction,prevtemp);
+                    prevtemp = temp;
+                }
+                input.setHint(input.getHint() + "" +temp + "*");
             }
             else
             {
-                input.setHint(temp + "-");
+                prevtemp = temp;
+                input.setHint(temp + "*");
             }
             input.setText("");
             counter++;
+            prevaction ="*";
+        }
+    }
+
+
+    public void divide(View view)
+    {
+        if(!input.getText().toString().isEmpty())
+        {
+            temp = Integer.parseInt(String.valueOf(input.getText()));
+            if(counter > 0)
+            {
+                if(prevaction.equals("*") || prevaction.equals("/"))
+                {
+                    prevtemp = MDsum(prevtemp, prevaction, temp);
+                }
+                else
+                {
+                    total = Total(total,temp,prevaction,prevtemp);
+                    prevtemp = temp;
+                }
+                input.setHint(input.getHint() + "" +temp + "/");
+            }
+            else
+            {
+                prevtemp = temp;
+                input.setHint(temp + "/");
+            }
+            input.setText("");
+            counter++;
+            prevaction ="/";
+        }
+    }
+
+
+    public void equals(View view)
+    {
+        if(!input.getText().toString().isEmpty())
+        {
+            temp = Integer.parseInt(String.valueOf(input.getText()));
+            if(counter > 0)
+            {
+                total = Total(total, temp, prevaction, prevtemp);
+                input.setText(total + "");
+            }
+            else
+            {
+                total = temp;
+                input.setText(temp + "");
+            }
+            counter=0;
+            input.setHint("");
+            prevaction = "";
+            temp = total;
+            total = 0;
         }
     }
 
@@ -121,31 +187,31 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
-
-
-
-
-
-    public int Total(int total, String prevaction, int temp)
+    public int Total(int total, int temp, String prevaction, int prevtemp)
     {
-        if(prevaction.equals("+"))
+        switch (prevaction)
         {
-            return total+temp;
-        }
-        else if(prevaction.equals("-"))
-        {
-            return total-temp;
-        }
-        else if(prevaction.equals("*"))
-        {
-            return total*temp;
-        }
-        else if(prevaction.equals("/"))
-        {
-            return total/temp;
+            case "+":
+                return total + temp;
+            case "-":
+                return total - temp;
+            case "*":
+                return total + prevtemp * temp;
+            case "/":
+                return total + prevtemp / temp;
         }
         return temp;
+    }
+
+    public int MDsum(int prevtemp, String prevaction, int temp)
+    {
+        if(prevaction.equals("*"))
+        {
+            return prevtemp*temp;
+        }
+        else
+        {
+            return  prevtemp/temp;
+        }
     }
 }
