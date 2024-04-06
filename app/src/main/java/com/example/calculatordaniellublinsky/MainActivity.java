@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
 {
     EditText input;
@@ -19,6 +22,9 @@ public class MainActivity extends AppCompatActivity
     Button equals;
     Button AC;
     Button credits;
+    int temp;
+    int counter;
+    int total;
 
 
     @Override
@@ -45,4 +51,29 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void plus(View view)
+    {
+        if(!input.getText().toString().isEmpty())
+        {
+
+            total = total + temp;
+            temp = Integer.parseInt(String.valueOf(input.getText()));
+            if(counter > 0)
+            {
+                input.setHint(input.getHint() + "" +temp + "+");
+            }
+            else
+            {
+                input.setHint(temp + "+");
+            }
+            input.setText("");
+            counter++;
+        }
+    }
+
+
+    public void minus(View view)
+    {
+
+    }
 }
