@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     int counter;
     int total;
     int prevtemp;
+    String preDM = "";
     String prevaction = "";
 
 
@@ -59,8 +60,16 @@ public class MainActivity extends AppCompatActivity
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                total = Total(total,temp,prevaction,prevtemp);
-                input.setHint(input.getHint() + "" +temp + "+");
+                if(prevaction.equals("*") || prevaction.equals("/"))
+                {
+                    total = Total(total, temp, prevaction, prevtemp, preDM);
+                    input.setHint(input.getHint() + "" +temp + "+");
+                }
+                else
+                {
+                    total = Total(total,temp,prevaction,prevtemp);
+                    input.setHint(input.getHint() + "" +temp + "+");
+                }
             }
             else
             {
@@ -81,8 +90,16 @@ public class MainActivity extends AppCompatActivity
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                total = Total(total,temp,prevaction,prevtemp);
-                input.setHint(input.getHint() + "" +temp + "-");
+                if(prevaction.equals("*") || prevaction.equals("/"))
+                {
+                    total = Total(total, temp, prevaction, prevtemp, preDM);
+                    input.setHint(input.getHint() + "" +temp + "-");
+                }
+                else
+                {
+                    total = Total(total,temp,prevaction,prevtemp);
+                    input.setHint(input.getHint() + "" +temp + "-");
+                }
             }
             else
             {
@@ -109,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    total = Total(total,temp,prevaction,prevtemp);
+                    preDM = prevaction;
                     prevtemp = temp;
                 }
                 input.setHint(input.getHint() + "" +temp + "*");
@@ -139,7 +156,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    total = Total(total,temp,prevaction,prevtemp);
+                    preDM = prevaction;
                     prevtemp = temp;
                 }
                 input.setHint(input.getHint() + "" +temp + "/");
@@ -163,7 +180,14 @@ public class MainActivity extends AppCompatActivity
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                total = Total(total, temp, prevaction, prevtemp);
+                if(prevaction.equals("*") || prevaction.equals("/"))
+                {
+                    total = Total(total, temp, prevaction, prevtemp, preDM);
+                }
+                else
+                {
+                    total = Total(total,temp,prevaction,prevtemp);
+                }
                 input.setText(total + "");
             }
             else
@@ -201,6 +225,31 @@ public class MainActivity extends AppCompatActivity
                 return total + prevtemp / temp;
         }
         return temp;
+    }
+    public int Total(int total, int temp, String prevaction, int prevtemp, String PreDM)
+    {
+        if(prevaction.equals("*"))
+        {
+            if (preDM.equals("+"))
+            {
+                return total + prevtemp / temp;
+            }
+            else
+            {
+                return total - prevtemp / temp;
+            }
+        }
+        else
+        {
+            if (preDM.equals("+"))
+            {
+                return total + prevtemp / temp;
+            }
+            else
+            {
+                return total - prevtemp / temp;
+            }
+        }
     }
 
     public int MDsum(int prevtemp, String prevaction, int temp)
