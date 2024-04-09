@@ -263,4 +263,17 @@ public class MainActivity extends AppCompatActivity
             return  prevtemp/temp;
         }
     }
+
+    public void AC(View view)
+    {
+        temp = 0;
+        counter = 0;
+        total = 0;
+        prevtemp = 0;
+        preDM = "";
+        prevaction = "";
+        input.setText("");
+        input.setHint("         Enter Number");
+
+    }
 }
