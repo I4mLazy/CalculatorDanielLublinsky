@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                if(prevaction.equals("*") || prevaction.equals("/"))
+                if((prevaction.equals("*") || prevaction.equals("/")) && (preDM.equals("+") || preDM.equals("-")))
                 {
                     total = Total(total, temp, prevaction, prevtemp, preDM);
                     input.setHint(input.getHint() + "" +temp + "+");
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
             temp = Integer.parseInt(String.valueOf(input.getText()));
             if(counter > 0)
             {
-                if(prevaction.equals("*") || prevaction.equals("/"))
+                if((prevaction.equals("*") || prevaction.equals("/")) && (preDM.equals("+") || preDM.equals("-")))
                 {
                     total = Total(total, temp, prevaction, prevtemp, preDM);
                     input.setHint(input.getHint() + "" +temp + "-");
