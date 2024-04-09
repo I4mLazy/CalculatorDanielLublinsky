@@ -1,5 +1,5 @@
 package com.example.calculatordaniellublinsky;
-
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -11,6 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity
 {
     EditText input;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     int prevtemp;
     String preDM = "";
     String prevaction = "";
+    String lastans = "";
 
 
     @Override
@@ -195,6 +199,7 @@ public class MainActivity extends AppCompatActivity
                 total = temp;
                 input.setText(temp + "");
             }
+            lastans = String.valueOf(total);
             counter=0;
             input.setHint("");
             prevaction = "";
@@ -203,13 +208,30 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void AC(View view)
+    {
+        temp = 0;
+        counter = 0;
+        total = 0;
+        prevtemp = 0;
+        preDM = "";
+        prevaction = "";
+        input.setText("");
+        input.setHint("         Enter Number");
+        lastans = "";
 
+    }
 
+    public void credits(View view)
+    {
+        if(!lastans.equals(""))
+        {
+            Intent si = new Intent(this, MainActivity2.class);
+            si.putExtra("n",lastans);
 
-
-
-
-
+            startActivity(si);
+        }
+    }
 
     public int Total(int total, int temp, String prevaction, int prevtemp)
     {
@@ -262,18 +284,5 @@ public class MainActivity extends AppCompatActivity
         {
             return  prevtemp/temp;
         }
-    }
-
-    public void AC(View view)
-    {
-        temp = 0;
-        counter = 0;
-        total = 0;
-        prevtemp = 0;
-        preDM = "";
-        prevaction = "";
-        input.setText("");
-        input.setHint("         Enter Number");
-
     }
 }
